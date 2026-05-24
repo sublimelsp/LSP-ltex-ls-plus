@@ -100,7 +100,6 @@ class LTeXLsPlus(LspPlugin):
         context.variables.update({
             "script": server_script_name + (".bat" if sublime.platform() == 'windows' else ""),
             "serverdir": str(server_directory),
-            "serverversion": server_version,
         })
 
     @classmethod
