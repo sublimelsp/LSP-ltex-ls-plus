@@ -116,21 +116,21 @@ class LTeXLsPlus(LspPlugin):
         if version := context.configuration.root_settings.get("version"):
             return version
         # Use latest tested release by default but allow overwriting the behavior.
-        cls.fetch_latest_release()
-        if context.configuration.root_settings.get("allow_untested") and cls.latest_github_release:
-            return cls.latest_github_release
+        if context.configuration.root_settings.get("allow_untested") and (latest_release := cls.fetch_latest_release()):
+            return latest_release
         return LATEST_TESTED_RELEASE
 
     @classmethod
-    def fetch_latest_release(cls) -> None:
+    def fetch_latest_release(cls) -> str | None:
         """Fetches a the latest release via GitHub API."""
         if not cls.latest_github_release:
             try:
                 with urllib.request.urlopen(GITHUB_RELEASES_API_URL) as f:
-                    data = json.loads(f.read().decode("utf-8"))
+                    data: dict[str, str] = json.loads(f.read().decode("utf-8"))
                     cls.latest_github_release = data["tag_name"]
             except urllib.error.URLError:
                 pass
+        return cls.latest_github_release
 
     @command_handler('_ltex.addToDictionary')
     def on_add_to_dictionary_command(self, arguments: list[Any] | None) -> Promise[None]:
