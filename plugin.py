@@ -94,7 +94,7 @@ class LTeXLsPlus(LspPlugin):
                     raise UnsupportedOperation()
                 archive.extractall(tempdir)
                 archive.close()
-                shutil.move(os.path.join(tempdir, server_folder_name), target_directory)
+                shutil.move(Path(tempdir, server_folder_name), target_directory)
                 if not server_directory.exists():
                     raise PluginStartError("Download failed or version could not be determined")
         context.variables.update({
