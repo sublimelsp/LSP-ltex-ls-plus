@@ -97,6 +97,6 @@
     // The startup command.
     // Do not change this unless you know what you do!
     "command": [
-        "${serverdir}/bin/${script}",
+        "${server_path}",
     ],
 }

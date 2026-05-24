@@ -60,7 +60,7 @@ class LTeXLsPlus(LspPlugin):
     @override
     def on_pre_start_async(cls, context: OnPreStartContext) -> None:
         server_script_name = "ltex-ls-plus"
-        server_version = cls.serverversion(context)
+        server_version = cls.server_version(context)
         server_folder_name = f"{server_script_name}-{server_version}"
         # The directory of the server. In here are the "bin" and "lib" folders.
         server_directory = cls.plugin_storage_path / server_folder_name
@@ -97,13 +97,13 @@ class LTeXLsPlus(LspPlugin):
                 shutil.move(Path(tempdir, server_folder_name), target_directory)
                 if not server_directory.exists():
                     raise PluginStartError("Download failed or version could not be determined")
+        script_name = server_script_name + (".bat" if sublime.platform() == 'windows' else "")
         context.variables.update({
-            "script": server_script_name + (".bat" if sublime.platform() == 'windows' else ""),
-            "serverdir": str(server_directory),
+            "server_path": f'{server_directory}/bin/{script_name}',
         })
 
     @classmethod
-    def serverversion(cls, context: OnPreStartContext) -> str:
+    def server_version(cls, context: OnPreStartContext) -> str:
         """
         Returns the version of ltex-ls to use. Can be None if
         no version is set in settings and no connection is available and
