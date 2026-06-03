@@ -59,6 +59,16 @@ class LTeXLsPlus(LspPlugin):
     @classmethod
     @override
     def on_pre_start_async(cls, context: OnPreStartContext) -> None:
+        server_path = context.configuration.root_settings.get('server_path', 'auto')
+        if server_path == 'auto':
+            cls.setup_managed_server(context)
+        else:
+            context.variables.update({
+                "server_path": server_path,
+            })
+
+    @classmethod
+    def setup_managed_server(cls, context: OnPreStartContext) -> None:
         server_script_name = "ltex-ls-plus"
         server_version = cls.server_version(context)
         server_folder_name = f"{server_script_name}-{server_version}"
@@ -94,7 +104,7 @@ class LTeXLsPlus(LspPlugin):
                     raise UnsupportedOperation()
                 archive.extractall(tempdir)
                 archive.close()
-                shutil.move(Path(tempdir, server_folder_name), target_directory)
+                shutil.move(str(Path(tempdir, server_folder_name)), target_directory)
                 if not server_directory.exists():
                     raise PluginStartError("Download failed or version could not be determined")
         script_name = server_script_name + (".bat" if sublime.platform() == 'windows' else "")
