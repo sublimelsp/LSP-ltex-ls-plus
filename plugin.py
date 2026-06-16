@@ -24,7 +24,7 @@ from typing_extensions import override
 
 GITHUB_RELEASES_API_URL = "https://api.github.com/repos/ltex-plus/ltex-ls-plus/releases/latest"
 GITHUB_REPOSITORY_URL = "https://github.com/ltex-plus/ltex-ls-plus"
-LATEST_TESTED_RELEASE = "18.6.1"
+LATEST_TESTED_RELEASE = "18.7.0"
 SETTINGS_FILENAME = "LSP-ltex-ls-plus.sublime-settings"
 
 def code_action_insert_settings(server_setting_key: str, value: dict[str, Any]):
