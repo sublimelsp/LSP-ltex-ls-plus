@@ -181,18 +181,6 @@
                       ],
                       "markdownDescription": "Optional mother tongue of the user (e.g., `\"de-DE\"`). [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexadditionalrulesmothertongue)"
                     },
-                    "ltex.additionalRules.neuralNetworkModel": {
-                      "type": "string",
-                      "default": "",
-                      "markdownDeprecationMessage": "**Deprecated:** This setting is not supported by LanguageTool anymore, see [LanguageTool 6.0 release notes](https://github.com/languagetool-org/languagetool/blob/v6.0/languagetool-standalone/CHANGES.md)",
-                      "deprecationMessage": "Deprecated: This setting is not supported by LanguageTool anymore, see LanguageTool 6.0 release notes"
-                    },
-                    "ltex.additionalRules.word2VecModel": {
-                      "type": "string",
-                      "default": "",
-                      "markdownDeprecationMessage": "**Deprecated:** This setting is not supported by LanguageTool anymore, see [LanguageTool 6.0 release notes](https://github.com/languagetool-org/languagetool/blob/v6.0/languagetool-standalone/CHANGES.md)",
-                      "deprecationMessage": "Deprecated: This setting is not supported by LanguageTool anymore, see LanguageTool 6.0 release notes"
-                    },
                     "ltex.bibtex.fields": {
                       "type": "object",
                       "default": {},
