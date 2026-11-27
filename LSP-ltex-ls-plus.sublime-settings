@@ -71,8 +71,9 @@
         "ltex.languageToolOrg.apiKey": "",
         // Logging level (verbosity) of the ltex-ls server log
         "ltex.ltex-ls.logLevel": "fine",
-        // Size of the LanguageTool ResultCache in sentences (must be a positive integer).
-        "ltex.sentenceCacheSize": 2000,
+        // Size of the LanguageTool ResultCache in sentences. The recommended value 0 disables
+        // LanguageTool's own cache, as it is superseded by the server's per-paragraph cache.
+        "ltex.sentenceCacheSize": 0,
         // Severity of the diagnostics corresponding to the grammar and spelling errors.
         "ltex.diagnosticSeverity": "information",
 
