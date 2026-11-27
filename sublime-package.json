@@ -1007,21 +1007,6 @@
                       "type": "integer",
                       "default": 0,
                       "markdownDescription": "Size of the LanguageTool `ResultCache` in sentences. The default and recommended value is `0`, which disables LanguageTool's own cache, as it is superseded by ltex-ls-plus's per-paragraph cache. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexsentencecachesize)"
-                    },
-                    "ltex.trace.server": {
-                      "type": "string",
-                      "default": "off",
-                      "enum": [
-                        "off",
-                        "messages",
-                        "verbose"
-                      ],
-                      "markdownEnumDescriptions": [
-                        "Don't log any of the communication between language client and server.",
-                        "Log the type of requests and responses between language client and server.",
-                        "Log the type and contents of requests and responses between language client and server."
-                      ],
-                      "markdownDescription": "Debug setting to log the communication between language client and server. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltextraceserver)"
                     }
                   }
                 }
