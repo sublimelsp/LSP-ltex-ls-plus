@@ -71,6 +71,13 @@
         // If set to a non-empty string, LTEX will not use the bundled, 
         // built-in version of LanguageTool. Instead, LTEX will connect to an external one
         "ltex.languageToolHttpServerUri": "",
+        // If true and the server at `ltex.languageToolHttpServerUri` cannot be reached
+        // (e.g. no network), the text is checked with the bundled LanguageTool instead
+        // of producing no diagnostics.
+        "ltex.languageToolHttpServerOfflineFallback": false,
+        // Time in seconds to wait for an answer from the LanguageTool HTTP server.
+        // 0 or less means no limit.
+        "ltex.languageToolHttpServerTimeoutSeconds": 60,
         // username on languagetool.org for Premium API access
         "ltex.languageToolOrg.username": "",
         // set API key on languagetool.org for Premium API access
