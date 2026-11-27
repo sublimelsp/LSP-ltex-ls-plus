@@ -18,11 +18,1013 @@
           "definitions": {
             "PluginConfig": {
               "properties": {
+                "version": {
+                  "type": "string",
+                  "default": "",
+                  "markdownDescription": "The version of the server to use: `\"\"` or a GitHub release tag. `\"\"` uses the latest tested release (or the last downloaded version when offline)."
+                },
+                "allow_untested": {
+                  "type": "boolean",
+                  "default": false,
+                  "markdownDescription": "Download the latest server release even if it was not tested with this package. Only used when `version` is `\"\"`."
+                },
                 "server_path": {
                   "type": "string",
                   "default": "auto",
                   "markdownDescription": "The path to the server binary to use for starting the language server. Use `auto` for the package to manage (install/update) server automatically.\n\n> [!NOTE]\n> Change this instead of directly updating `command` - the `${server_path}` variable is dynamically resolved based on this setting.\n\n> [!WARNING]\n> Using custom binary could result in package settings not matching what server supports."
                 },
+                "settings": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "ltex.additionalRules.enablePickyRules": {
+                      "type": "boolean",
+                      "default": false,
+                      "markdownDescription": "Enable LanguageTool rules that are marked as picky and that are disabled by default, e.g., rules about passive voice, sentence length, etc., at the cost of more false positives."
+                    },
+                    "ltex.additionalRules.languageModel": {
+                      "type": "string",
+                      "default": "",
+                      "markdownDescription": "Optional path to a directory with rules of a language model with *n*-gram occurrence counts. Set this setting to the parent directory that contains subdirectories for languages (e.g., `en`)."
+                    },
+                    "ltex.additionalRules.motherTongue": {
+                      "type": "string",
+                      "default": "",
+                      "enum": [
+                        "",
+                        "ar",
+                        "ast-ES",
+                        "be-BY",
+                        "br-FR",
+                        "ca-ES",
+                        "ca-ES-balear",
+                        "ca-ES-valencia",
+                        "crh-UA",
+                        "da-DK",
+                        "de",
+                        "de-AT",
+                        "de-CH",
+                        "de-DE",
+                        "de-DE-x-simple-language",
+                        "de-DE-x-simple-language-DE",
+                        "de-LU",
+                        "el-GR",
+                        "en",
+                        "en-AU",
+                        "en-CA",
+                        "en-GB",
+                        "en-NZ",
+                        "en-US",
+                        "en-ZA",
+                        "eo",
+                        "es",
+                        "es-AR",
+                        "es-ES",
+                        "fa",
+                        "fa-IR",
+                        "fr",
+                        "fr-BE",
+                        "fr-CA",
+                        "fr-CH",
+                        "fr-FR",
+                        "ga-IE",
+                        "gl-ES",
+                        "it",
+                        "it-IT",
+                        "ja-JP",
+                        "km-KH",
+                        "nb",
+                        "nl",
+                        "nl-BE",
+                        "nl-NL",
+                        "no",
+                        "pl-PL",
+                        "pt",
+                        "pt-AO",
+                        "pt-BR",
+                        "pt-MZ",
+                        "pt-PT",
+                        "ro-RO",
+                        "ru-RU",
+                        "sk-SK",
+                        "sl-SI",
+                        "sv",
+                        "sv-SE",
+                        "ta-IN",
+                        "tl-PH",
+                        "uk-UA",
+                        "zh-CN"
+                      ],
+                      "markdownEnumDescriptions": [
+                        "No mother tongue",
+                        "Arabic",
+                        "Asturian",
+                        "Belarusian",
+                        "Breton",
+                        "Catalan",
+                        "Catalan (Balearic)",
+                        "Catalan (Valencian)",
+                        "Crimean Tatar",
+                        "Danish",
+                        "German",
+                        "German (Austria)",
+                        "German (Swiss)",
+                        "German (Germany)",
+                        "Simple German",
+                        "Simple German (alias of `de-DE-x-simple-language`)",
+                        "German (alias of `de`)",
+                        "Greek",
+                        "English",
+                        "English (Australian)",
+                        "English (Canadian)",
+                        "English (GB)",
+                        "English (New Zealand)",
+                        "English (US)",
+                        "English (South African)",
+                        "Esperanto",
+                        "Spanish",
+                        "Spanish (voseo)",
+                        "Spanish (alias of `es`)",
+                        "Persian",
+                        "Persian (alias of `fa`)",
+                        "French",
+                        "French (Belgium)",
+                        "French (Canada)",
+                        "French (Switzerland)",
+                        "French (alias of `fr`)",
+                        "Irish",
+                        "Galician",
+                        "Italian",
+                        "Italian (alias of `it`)",
+                        "Japanese",
+                        "Khmer",
+                        "Norwegian (Bokmål)",
+                        "Dutch",
+                        "Dutch (Belgium)",
+                        "Dutch (alias of `nl`)",
+                        "Norwegian (Bokmål) (alias of `nb`)",
+                        "Polish",
+                        "Portuguese",
+                        "Portuguese (Angola preAO)",
+                        "Portuguese (Brazil)",
+                        "Portuguese (Moçambique preAO)",
+                        "Portuguese (Portugal)",
+                        "Romanian",
+                        "Russian",
+                        "Slovak",
+                        "Slovenian",
+                        "Swedish",
+                        "Swedish (alias of `sv`)",
+                        "Tamil",
+                        "Tagalog",
+                        "Ukrainian",
+                        "Chinese"
+                      ],
+                      "markdownDescription": "Optional mother tongue of the user (e.g., `\"de-DE\"`). [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexadditionalrulesmothertongue)"
+                    },
+                    "ltex.additionalRules.neuralNetworkModel": {
+                      "type": "string",
+                      "default": "",
+                      "markdownDeprecationMessage": "**Deprecated:** This setting is not supported by LanguageTool anymore, see [LanguageTool 6.0 release notes](https://github.com/languagetool-org/languagetool/blob/v6.0/languagetool-standalone/CHANGES.md)",
+                      "deprecationMessage": "Deprecated: This setting is not supported by LanguageTool anymore, see LanguageTool 6.0 release notes"
+                    },
+                    "ltex.additionalRules.word2VecModel": {
+                      "type": "string",
+                      "default": "",
+                      "markdownDeprecationMessage": "**Deprecated:** This setting is not supported by LanguageTool anymore, see [LanguageTool 6.0 release notes](https://github.com/languagetool-org/languagetool/blob/v6.0/languagetool-standalone/CHANGES.md)",
+                      "deprecationMessage": "Deprecated: This setting is not supported by LanguageTool anymore, see LanguageTool 6.0 release notes"
+                    },
+                    "ltex.bibtex.fields": {
+                      "type": "object",
+                      "default": {},
+                      "patternProperties": {
+                        "^.*$": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false,
+                      "markdownDescription": "List of BibTeX fields whose values are to be checked in BibTeX files. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexbibtexfields)",
+                      "examples": [
+                        {
+                          "maintitle": false,
+                          "seealso": true
+                        }
+                      ]
+                    },
+                    "ltex.checkFrequency": {
+                      "type": "string",
+                      "default": "edit",
+                      "enum": [
+                        "edit",
+                        "save",
+                        "manual"
+                      ],
+                      "markdownEnumDescriptions": [
+                        "Documents are checked when they are opened or edited (on every keystroke), or when the settings change.",
+                        "Documents are checked when they are opened or saved, or when the settings change.",
+                        "Documents are not checked automatically, except when the settings change. Use commands such as [LTeX: Check Current Document`](https://ltex-plus.github.io/ltex-plus/vscode-ltex-plus/commands.html#ltex-check-current-document) to manually trigger checks."
+                      ],
+                      "markdownDescription": "Controls when documents should be checked. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexcheckfrequency)"
+                    },
+                    "ltex.clearDiagnosticsWhenClosingFile": {
+                      "type": "boolean",
+                      "default": true,
+                      "markdownDescription": "If set to `true`, diagnostics of a file are cleared when the file is closed."
+                    },
+                    "ltex.completionEnabled": {
+                      "type": "boolean",
+                      "default": false,
+                      "markdownDescription": "Whether completion is enabled (also known as auto-completion, suggestions, or [IntelliSense](https://code.visualstudio.com/docs/editing/intellisense)). [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexcompletionenabled)"
+                    },
+                    "ltex.diagnosticSeverity": {
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "error",
+                            "warning",
+                            "information",
+                            "hint"
+                          ],
+                          "markdownEnumDescriptions": [
+                            "Error diagnostics are usually underlined with a red squiggly line and appear in editor, minimap, Problems tab, and Explorer.",
+                            "Warning diagnostics are usually underlined with a yellow squiggly line and appear in editor, minimap, Problems tab, and Explorer.",
+                            "Information diagnostics are usually underlined with a blue squiggly line and appear in editor, minimap, and Problems tab, but not in the Explorer.",
+                            "Hint diagnostics are not underlined (only subtly marked) and only appear in the editor, not in minimap, Problems tab, or Explorer."
+                          ]
+                        },
+                        {
+                          "type": "object",
+                          "patternProperties": {
+                            "^.*$": {
+                              "type": "string",
+                              "enum": [
+                                "error",
+                                "warning",
+                                "information",
+                                "hint"
+                              ],
+                              "markdownEnumDescriptions": [
+                                "Error diagnostics are usually underlined with a red squiggly line and appear in editor, minimap, Problems tab, and Explorer.",
+                                "Warning diagnostics are usually underlined with a yellow squiggly line and appear in editor, minimap, Problems tab, and Explorer.",
+                                "Information diagnostics are usually underlined with a blue squiggly line and appear in editor, minimap, and Problems tab, but not in the Explorer.",
+                                "Hint diagnostics are not underlined (only subtly marked) and only appear in the editor, not in minimap, Problems tab, or Explorer."
+                              ]
+                            }
+                          },
+                          "required": [
+                            "default"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ],
+                      "default": "information",
+                      "markdownDescription": "Severity of the diagnostics corresponding to the grammar and spelling errors. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexdiagnosticseverity)",
+                      "examples": [
+                        "information",
+                        {
+                          "PASSIVE_VOICE": "hint",
+                          "default": "information"
+                        }
+                      ]
+                    },
+                    "ltex.dictionary": {
+                      "type": "object",
+                      "default": {},
+                      "propertyNames": {
+                        "type": "string",
+                        "enum": [
+                          "ar",
+                          "ast-ES",
+                          "be-BY",
+                          "br-FR",
+                          "ca-ES",
+                          "ca-ES-balear",
+                          "ca-ES-valencia",
+                          "crh-UA",
+                          "da-DK",
+                          "de",
+                          "de-AT",
+                          "de-CH",
+                          "de-DE",
+                          "de-DE-x-simple-language",
+                          "de-DE-x-simple-language-DE",
+                          "de-LU",
+                          "el-GR",
+                          "en",
+                          "en-AU",
+                          "en-CA",
+                          "en-GB",
+                          "en-NZ",
+                          "en-US",
+                          "en-ZA",
+                          "eo",
+                          "es",
+                          "es-AR",
+                          "es-ES",
+                          "fa",
+                          "fa-IR",
+                          "fr",
+                          "fr-BE",
+                          "fr-CA",
+                          "fr-CH",
+                          "fr-FR",
+                          "ga-IE",
+                          "gl-ES",
+                          "it",
+                          "it-IT",
+                          "ja-JP",
+                          "km-KH",
+                          "nb",
+                          "nl",
+                          "nl-BE",
+                          "nl-NL",
+                          "no",
+                          "pl-PL",
+                          "pt",
+                          "pt-AO",
+                          "pt-BR",
+                          "pt-MZ",
+                          "pt-PT",
+                          "ro-RO",
+                          "ru-RU",
+                          "sk-SK",
+                          "sl-SI",
+                          "sv",
+                          "sv-SE",
+                          "ta-IN",
+                          "tl-PH",
+                          "uk-UA",
+                          "zh-CN"
+                        ]
+                      },
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "markdownDescription": "Lists of additional words and phrases that should not be counted as spelling errors. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexdictionary)",
+                      "examples": [
+                        {
+                          "en-US": [
+                            "adaptivity",
+                            "precomputed",
+                            "subproblem"
+                          ],
+                          "de-DE": [
+                            "B-Splines",
+                            ":/path/to/externalFile.txt"
+                          ]
+                        }
+                      ]
+                    },
+                    "ltex.disabledRules": {
+                      "type": "object",
+                      "default": {},
+                      "propertyNames": {
+                        "type": "string",
+                        "enum": [
+                          "ar",
+                          "ast-ES",
+                          "be-BY",
+                          "br-FR",
+                          "ca-ES",
+                          "ca-ES-balear",
+                          "ca-ES-valencia",
+                          "crh-UA",
+                          "da-DK",
+                          "de",
+                          "de-AT",
+                          "de-CH",
+                          "de-DE",
+                          "de-DE-x-simple-language",
+                          "de-DE-x-simple-language-DE",
+                          "de-LU",
+                          "el-GR",
+                          "en",
+                          "en-AU",
+                          "en-CA",
+                          "en-GB",
+                          "en-NZ",
+                          "en-US",
+                          "en-ZA",
+                          "eo",
+                          "es",
+                          "es-AR",
+                          "es-ES",
+                          "fa",
+                          "fa-IR",
+                          "fr",
+                          "fr-BE",
+                          "fr-CA",
+                          "fr-CH",
+                          "fr-FR",
+                          "ga-IE",
+                          "gl-ES",
+                          "it",
+                          "it-IT",
+                          "ja-JP",
+                          "km-KH",
+                          "nb",
+                          "nl",
+                          "nl-BE",
+                          "nl-NL",
+                          "no",
+                          "pl-PL",
+                          "pt",
+                          "pt-AO",
+                          "pt-BR",
+                          "pt-MZ",
+                          "pt-PT",
+                          "ro-RO",
+                          "ru-RU",
+                          "sk-SK",
+                          "sl-SI",
+                          "sv",
+                          "sv-SE",
+                          "ta-IN",
+                          "tl-PH",
+                          "uk-UA",
+                          "zh-CN"
+                        ]
+                      },
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "markdownDescription": "Lists of rules that should be disabled (if enabled by default by LanguageTool). [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexdisabledrules)",
+                      "examples": [
+                        {
+                          "en-US": [
+                            "EN_QUOTES",
+                            "UPPERCASE_SENTENCE_START",
+                            ":/path/to/externalFile.txt"
+                          ]
+                        }
+                      ]
+                    },
+                    "ltex.enabled": {
+                      "oneOf": [
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        }
+                      ],
+                      "default": [
+                        "bibtex",
+                        "context",
+                        "context.tex",
+                        "html",
+                        "latex",
+                        "markdown",
+                        "mdx",
+                        "typst",
+                        "asciidoc",
+                        "neorg",
+                        "org",
+                        "quarto",
+                        "restructuredtext",
+                        "rsweave"
+                      ],
+                      "markdownDescription": "Controls whether the extension is enabled. Allows disabling LanguageTool on specific workspaces or for specific code language modes (i.e., file types). [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexenabled)",
+                      "examples": [
+                        true,
+                        false,
+                        [
+                          "latex",
+                          "markdown"
+                        ]
+                      ]
+                    },
+                    "ltex.enabledRules": {
+                      "type": "object",
+                      "default": {},
+                      "propertyNames": {
+                        "type": "string",
+                        "enum": [
+                          "ar",
+                          "ast-ES",
+                          "be-BY",
+                          "br-FR",
+                          "ca-ES",
+                          "ca-ES-balear",
+                          "ca-ES-valencia",
+                          "crh-UA",
+                          "da-DK",
+                          "de",
+                          "de-AT",
+                          "de-CH",
+                          "de-DE",
+                          "de-DE-x-simple-language",
+                          "de-DE-x-simple-language-DE",
+                          "de-LU",
+                          "el-GR",
+                          "en",
+                          "en-AU",
+                          "en-CA",
+                          "en-GB",
+                          "en-NZ",
+                          "en-US",
+                          "en-ZA",
+                          "eo",
+                          "es",
+                          "es-AR",
+                          "es-ES",
+                          "fa",
+                          "fa-IR",
+                          "fr",
+                          "fr-BE",
+                          "fr-CA",
+                          "fr-CH",
+                          "fr-FR",
+                          "ga-IE",
+                          "gl-ES",
+                          "it",
+                          "it-IT",
+                          "ja-JP",
+                          "km-KH",
+                          "nb",
+                          "nl",
+                          "nl-BE",
+                          "nl-NL",
+                          "no",
+                          "pl-PL",
+                          "pt",
+                          "pt-AO",
+                          "pt-BR",
+                          "pt-MZ",
+                          "pt-PT",
+                          "ro-RO",
+                          "ru-RU",
+                          "sk-SK",
+                          "sl-SI",
+                          "sv",
+                          "sv-SE",
+                          "ta-IN",
+                          "tl-PH",
+                          "uk-UA",
+                          "zh-CN"
+                        ]
+                      },
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "markdownDescription": "Lists of rules that should be enabled (if disabled by default by LanguageTool). [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexenabledrules)",
+                      "examples": [
+                        {
+                          "en-GB": [
+                            "PASSIVE_VOICE",
+                            "OXFORD_SPELLING_NOUNS",
+                            ":/path/to/externalFile.txt"
+                          ]
+                        }
+                      ]
+                    },
+                    "ltex.hiddenFalsePositives": {
+                      "type": "object",
+                      "default": {},
+                      "propertyNames": {
+                        "type": "string",
+                        "enum": [
+                          "ar",
+                          "ast-ES",
+                          "be-BY",
+                          "br-FR",
+                          "ca-ES",
+                          "ca-ES-balear",
+                          "ca-ES-valencia",
+                          "crh-UA",
+                          "da-DK",
+                          "de",
+                          "de-AT",
+                          "de-CH",
+                          "de-DE",
+                          "de-DE-x-simple-language",
+                          "de-DE-x-simple-language-DE",
+                          "de-LU",
+                          "el-GR",
+                          "en",
+                          "en-AU",
+                          "en-CA",
+                          "en-GB",
+                          "en-NZ",
+                          "en-US",
+                          "en-ZA",
+                          "eo",
+                          "es",
+                          "es-AR",
+                          "es-ES",
+                          "fa",
+                          "fa-IR",
+                          "fr",
+                          "fr-BE",
+                          "fr-CA",
+                          "fr-CH",
+                          "fr-FR",
+                          "ga-IE",
+                          "gl-ES",
+                          "it",
+                          "it-IT",
+                          "ja-JP",
+                          "km-KH",
+                          "nb",
+                          "nl",
+                          "nl-BE",
+                          "nl-NL",
+                          "no",
+                          "pl-PL",
+                          "pt",
+                          "pt-AO",
+                          "pt-BR",
+                          "pt-MZ",
+                          "pt-PT",
+                          "ro-RO",
+                          "ru-RU",
+                          "sk-SK",
+                          "sl-SI",
+                          "sv",
+                          "sv-SE",
+                          "ta-IN",
+                          "tl-PH",
+                          "uk-UA",
+                          "zh-CN"
+                        ]
+                      },
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "markdownDescription": "Lists of false-positive diagnostics to hide (by hiding all diagnostics of a specific rule within a specific sentence). [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexhiddenfalsepositives)",
+                      "examples": [
+                        {
+                          "en-US": [
+                            ":/path/to/externalFile.txt"
+                          ]
+                        }
+                      ]
+                    },
+                    "ltex.language": {
+                      "type": "string",
+                      "default": "en-US",
+                      "enum": [
+                        "auto",
+                        "ar",
+                        "ast-ES",
+                        "be-BY",
+                        "br-FR",
+                        "ca-ES",
+                        "ca-ES-balear",
+                        "ca-ES-valencia",
+                        "crh-UA",
+                        "da-DK",
+                        "de",
+                        "de-AT",
+                        "de-CH",
+                        "de-DE",
+                        "de-DE-x-simple-language",
+                        "de-DE-x-simple-language-DE",
+                        "de-LU",
+                        "el-GR",
+                        "en",
+                        "en-AU",
+                        "en-CA",
+                        "en-GB",
+                        "en-NZ",
+                        "en-US",
+                        "en-ZA",
+                        "eo",
+                        "es",
+                        "es-AR",
+                        "es-ES",
+                        "fa",
+                        "fa-IR",
+                        "fr",
+                        "fr-BE",
+                        "fr-CA",
+                        "fr-CH",
+                        "fr-FR",
+                        "ga-IE",
+                        "gl-ES",
+                        "it",
+                        "it-IT",
+                        "ja-JP",
+                        "km-KH",
+                        "nb",
+                        "nl",
+                        "nl-BE",
+                        "nl-NL",
+                        "no",
+                        "pl-PL",
+                        "pt",
+                        "pt-AO",
+                        "pt-BR",
+                        "pt-MZ",
+                        "pt-PT",
+                        "ro-RO",
+                        "ru-RU",
+                        "sk-SK",
+                        "sl-SI",
+                        "sv",
+                        "sv-SE",
+                        "ta-IN",
+                        "tl-PH",
+                        "uk-UA",
+                        "zh-CN"
+                      ],
+                      "markdownEnumDescriptions": [
+                        "Automatic language detection",
+                        "Arabic",
+                        "Asturian",
+                        "Belarusian",
+                        "Breton",
+                        "Catalan",
+                        "Catalan (Balearic)",
+                        "Catalan (Valencian)",
+                        "Crimean Tatar",
+                        "Danish",
+                        "German",
+                        "German (Austria)",
+                        "German (Swiss)",
+                        "German (Germany)",
+                        "Simple German",
+                        "Simple German (alias of `de-DE-x-simple-language`)",
+                        "German (alias of `de`)",
+                        "Greek",
+                        "English",
+                        "English (Australian)",
+                        "English (Canadian)",
+                        "English (GB)",
+                        "English (New Zealand)",
+                        "English (US)",
+                        "English (South African)",
+                        "Esperanto",
+                        "Spanish",
+                        "Spanish (voseo)",
+                        "Spanish (alias of `es`)",
+                        "Persian",
+                        "Persian (alias of `fa`)",
+                        "French",
+                        "French (Belgium)",
+                        "French (Canada)",
+                        "French (Switzerland)",
+                        "French (alias of `fr`)",
+                        "Irish",
+                        "Galician",
+                        "Italian",
+                        "Italian (alias of `it`)",
+                        "Japanese",
+                        "Khmer",
+                        "Norwegian (Bokmål)",
+                        "Dutch",
+                        "Dutch (Belgium)",
+                        "Dutch (alias of `nl`)",
+                        "Norwegian (Bokmål) (alias of `nb`)",
+                        "Polish",
+                        "Portuguese",
+                        "Portuguese (Angola preAO)",
+                        "Portuguese (Brazil)",
+                        "Portuguese (Moçambique preAO)",
+                        "Portuguese (Portugal)",
+                        "Romanian",
+                        "Russian",
+                        "Slovak",
+                        "Slovenian",
+                        "Swedish",
+                        "Swedish (alias of `sv`)",
+                        "Tamil",
+                        "Tagalog",
+                        "Ukrainian",
+                        "Chinese"
+                      ],
+                      "markdownDescription": "The language LanguageTool checks against (e.g., `\"en-US\"`). The bare codes `\"en\"`, `\"de\"`, `\"pt\"` only check grammar — pick a regional variant (`\"en-US\"`, `\"de-DE\"`, `\"pt-BR\"`, …) to also get spell-check. Other languages: the bare code is fine. Or use `\"auto\"` to let LanguageTool detect the language. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexlanguage)"
+                    },
+                    "ltex.languageToolHttpServerOfflineFallback": {
+                      "type": "boolean",
+                      "default": false,
+                      "markdownDescription": "If `true` and `ltex.languageToolHttpServerUri` cannot be reached — typically a laptop with no network — the text is checked with the bundled LanguageTool instead of producing no diagnostics. Any HTTP response, including an error, is reported as before. The bundled LanguageTool is loaded on the first fallback, so that first offline check is slower. Every check tries the HTTP server first, and the first answer from the server switches back to it. Premium-only rules are not available offline, and rule IDs differ between the two backends. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexlanguagetoolhttpserverofflinefallback)"
+                    },
+                    "ltex.languageToolHttpServerTimeoutSeconds": {
+                      "type": "integer",
+                      "default": 60,
+                      "markdownDescription": "How many seconds to wait for the answer of the LanguageTool HTTP server (`ltex.languageToolHttpServerUri`) to a check. When the time is up, the connection is closed, the failure is logged and the check reports no matches, or, with `ltex.languageToolHttpServerOfflineFallback` on, the text is checked with the bundled LanguageTool. `0` or less means no limit. The default `60` matches api.languagetoolplus.com, which answers a check it cannot finish with HTTP 504 after 60 s. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexlanguagetoolhttpservertimeoutseconds)"
+                    },
+                    "ltex.languageToolHttpServerUri": {
+                      "type": "string",
+                      "default": "",
+                      "markdownDescription": "If set to a non-empty string, LTeX+ will not use the bundled, built-in version of LanguageTool. Instead, LTeX+ will connect to an external [LanguageTool HTTP server](https://dev.languagetool.org/http-server). Set this to the root URI of the server — for example, `https://api.languagetoolplus.com` for LanguageTool's hosted API, or `http://localhost:8081` for a self-hosted server. LTeX+ automatically appends the API path (`/v2/check`), so the URI should not include it. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexlanguagetoolhttpserveruri)",
+                      "examples": [
+                        "https://api.languagetoolplus.com",
+                        "http://localhost:8081"
+                      ]
+                    },
+                    "ltex.languageToolOrg.apiKey": {
+                      "type": "string",
+                      "default": "",
+                      "markdownDescription": "API key for Premium API access. Only relevant if `ltex.languageToolHttpServerUri` is set."
+                    },
+                    "ltex.languageToolOrg.username": {
+                      "type": "string",
+                      "default": "",
+                      "markdownDescription": "Username/email as used to log in at languagetool.org for Premium API access. Only relevant if `ltex.languageToolHttpServerUri` is set."
+                    },
+                    "ltex.latex.commands": {
+                      "type": "object",
+                      "default": {},
+                      "patternProperties": {
+                        "^.*$": {
+                          "type": "string",
+                          "enum": [
+                            "default",
+                            "ignore",
+                            "dummy",
+                            "pluralDummy",
+                            "vowelDummy"
+                          ],
+                          "markdownEnumDescriptions": [
+                            "The command is treated like unknown commands are treated by default: The command name itself is ignored, but the arguments are not ignored.",
+                            "The whole command together with its arguments is ignored.",
+                            "The whole command together with its arguments is replaced with a dummy word (i.e., `Dummy0`, `Dummy1`, etc.). LTeX+ internally uses this mechanism for equations, citations, references, and similar constructs that are part of the sentence structure and for which LanguageTool would throw an error if simply omitted from the checked text.",
+                            "The whole command together with its arguments is replaced with a plural dummy word (i.e., `Dummies`). See description for `\"dummy\"`.",
+                            "The whole command together with its arguments is replaced with a vowel dummy word (i.e., `Ina`). See description for `\"dummy\"`."
+                          ]
+                        }
+                      },
+                      "additionalProperties": false,
+                      "markdownDescription": "List of LaTeX commands to be handled by the LaTeX parser, listed together with empty arguments (e.g., `\"\\ref{}\"`, `\"\\documentclass[]{}\"`). [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexlatexcommands)",
+                      "examples": [
+                        {
+                          "\\label{}": "ignore",
+                          "\\documentclass[]{}": "ignore",
+                          "\\cite{}": "dummy",
+                          "\\cite[]{}": "dummy"
+                        }
+                      ]
+                    },
+                    "ltex.latex.environments": {
+                      "type": "object",
+                      "default": {},
+                      "patternProperties": {
+                        "^.*$": {
+                          "type": "string",
+                          "enum": [
+                            "default",
+                            "ignore"
+                          ],
+                          "markdownEnumDescriptions": [
+                            "The environment is treated like unknown environments are treated by default: The arguments of the environment are ignored, but the contents of the environment are not ignored.",
+                            "The whole environment together with its arguments and contents is ignored."
+                          ]
+                        }
+                      },
+                      "additionalProperties": false,
+                      "markdownDescription": "List of names of LaTeX environments to be handled by the LaTeX parser. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexlatexenvironments)",
+                      "examples": [
+                        {
+                          "lstlisting": "ignore",
+                          "verbatim": "ignore"
+                        }
+                      ]
+                    },
+                    "ltex.ltex-ls.languageToolHttpServerUri": {
+                      "type": "string",
+                      "default": "",
+                      "markdownDeprecationMessage": "**Deprecated:** This setting has been renamed to [`ltex.languageToolHttpServerUri`](https://ltex-plus.github.io/vscode-ltex-plus/docs/settings.html#ltexlanguagetoolhttpserveruri).",
+                      "deprecationMessage": "Deprecated: This setting has been renamed to ltex.languageToolHttpServerUri."
+                    },
+                    "ltex.ltex-ls.languageToolOrgApiKey": {
+                      "type": "string",
+                      "default": "",
+                      "markdownDeprecationMessage": "**Deprecated:** This setting has been renamed to [`ltex.languageToolOrg.apiKey`](https://ltex-plus.github.io/vscode-ltex-plus/docs/settings.html#ltexlanguagetoolorgapikey).",
+                      "deprecationMessage": "Deprecated: This setting has been renamed to ltex.languageToolOrg.apiKey."
+                    },
+                    "ltex.ltex-ls.languageToolOrgUsername": {
+                      "type": "string",
+                      "default": "",
+                      "markdownDeprecationMessage": "**Deprecated:** This setting has been renamed to [`ltex.languageToolOrg.username`](https://ltex-plus.github.io/vscode-ltex-plus/docs/settings.html#ltexlanguagetoolorgusername).",
+                      "deprecationMessage": "Deprecated: This setting has been renamed to ltex.languageToolOrg.username."
+                    },
+                    "ltex.ltex-ls.logLevel": {
+                      "type": "string",
+                      "default": "fine",
+                      "enum": [
+                        "severe",
+                        "warning",
+                        "info",
+                        "config",
+                        "fine",
+                        "finer",
+                        "finest"
+                      ],
+                      "markdownEnumDescriptions": [
+                        "Minimum verbosity. Only log severe errors.",
+                        "Very low verbosity. Only log severe errors and warnings.",
+                        "Low verbosity. Additionally, log startup and shutdown messages.",
+                        "Medium verbosity. Additionally, log configuration messages.",
+                        "Medium to high verbosity (default). Additionally, log when LanguageTool is called or LanguageTool has to be reinitialized due to changed settings.",
+                        "High verbosity. Log additional debugging information such as full texts to be checked.",
+                        "Maximum verbosity. Log all available debugging information."
+                      ],
+                      "markdownDescription": "Logging level (verbosity) of the ltex-ls-plus server log, which is accessible via `View` › `Output` › LTeX Language Server`. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexltex-lsloglevel)"
+                    },
+                    "ltex.markdown.nodes": {
+                      "type": "object",
+                      "default": {},
+                      "patternProperties": {
+                        "^.*$": {
+                          "type": "string",
+                          "enum": [
+                            "default",
+                            "ignore",
+                            "dummy",
+                            "pluralDummy",
+                            "vowelDummy"
+                          ],
+                          "markdownEnumDescriptions": [
+                            "The node is not treated specially.",
+                            "The whole node together with its `Text` leaves is ignored.",
+                            "The whole node together with its `Text` leaves is replaced with a dummy word (i.e., `Dummy0`, `Dummy1`, etc.). LTeX+ internally uses this mechanism for example for inline code (inside backticks) that is part of the sentence structure and for which LanguageTool would throw an error if simply omitted from the checked text.",
+                            "The whole node together with its `Text` leaves is replaced with a plural dummy word (i.e., `Dummies`). See description for `\"dummy\"`.",
+                            "The whole node together with its `Text` leaves is replaced with a vowel dummy word (i.e., `Ina`). See description for `\"dummy\"`."
+                          ]
+                        }
+                      },
+                      "additionalProperties": false,
+                      "markdownDescription": "List of Markdown node types to be handled by the Markdown parser. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexmarkdownnodes)",
+                      "examples": [
+                        {
+                          "CodeBlock": "ignore",
+                          "FencedCodeBlock": "ignore",
+                          "AutoLink": "dummy",
+                          "Code": "dummy"
+                        }
+                      ]
+                    },
+                    "ltex.maxRequestSize": {
+                      "type": "integer",
+                      "default": 20000,
+                      "markdownDescription": "The largest amount of text (in characters) sent to LanguageTool in a single request when a run of changed paragraphs is batched together. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexmaxrequestsize)"
+                    },
+                    "ltex.paragraphCacheEnabled": {
+                      "type": "boolean",
+                      "default": true,
+                      "markdownDescription": "Set to `false` to disable result reuse — every paragraph is re-checked on each pass. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexparagraphcacheenabled)"
+                    },
+                    "ltex.paragraphCacheTtlMinutes": {
+                      "type": "integer",
+                      "default": 30,
+                      "markdownDescription": "How long a document's cached results are kept after they stop being used. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexparagraphcachettlminutes)"
+                    },
+                    "ltex.preferredVariants": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "default": [
+                        "en-US",
+                        "de-DE",
+                        "pt-BR"
+                      ],
+                      "markdownDescription": "The regional variant to use for each language when `ltex.language` is `\"auto\"`. Language detection cannot tell British from American English, for example, so it returns the bare code `\"en\"`; for `\"en\"`, `\"de\"` and `\"pt\"`, the bare code only checks grammar. Each entry names one variant, such as `\"en-GB\"`, and is used when detection returns its base language. Entries are merged with the default `[\"en-US\", \"de-DE\", \"pt-BR\"]`: an entry replaces the default for its language, so `[\"en-GB\"]` gives `[\"en-GB\", \"de-DE\", \"pt-BR\"]`. Entries without a region, such as `\"en\"`, are ignored. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexpreferredvariants)",
+                      "examples": [
+                        [
+                          "en-GB"
+                        ]
+                      ]
+                    },
+                    "ltex.sentenceCacheSize": {
+                      "type": "integer",
+                      "default": 0,
+                      "markdownDescription": "Size of the LanguageTool `ResultCache` in sentences. The default and recommended value is `0`, which disables LanguageTool's own cache, as it is superseded by ltex-ls-plus's per-paragraph cache. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexsentencecachesize)"
+                    },
+                    "ltex.trace.server": {
+                      "type": "string",
+                      "default": "off",
+                      "enum": [
+                        "off",
+                        "messages",
+                        "verbose"
+                      ],
+                      "markdownEnumDescriptions": [
+                        "Don't log any of the communication between language client and server.",
+                        "Log the type of requests and responses between language client and server.",
+                        "Log the type and contents of requests and responses between language client and server."
+                      ],
+                      "markdownDescription": "Debug setting to log the communication between language client and server. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltextraceserver)"
+                    }
+                  }
+                }
               }
             }
           }
