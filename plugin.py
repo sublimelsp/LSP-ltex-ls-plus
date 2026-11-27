@@ -27,28 +27,37 @@ GITHUB_REPOSITORY_URL = "https://github.com/ltex-plus/ltex-ls-plus"
 LATEST_TESTED_RELEASE = "19.0.0"
 SETTINGS_FILENAME = "LSP-ltex-ls-plus.sublime-settings"
 
-def code_action_insert_settings(server_setting_key: str, value: dict[str, Any]):
+def read_user_server_settings() -> dict[str, Any]:
     """
-    Adds a server setting initiated via custom ltex-la codeAction.
-    Merges the settings if already present.
-    This function is used for the addToDictionary,... custom commands
-    :param      server_setting_key:    The key of the server setting
-                                       (in "settings" block)
-    :type       server_setting_key:    str
-    :param      value:  A dict of "language": [settings] pairs
-    :type       value:  dict
+    Returns the "settings" object from the user's settings file only.
+
+    `sublime.load_settings()` returns the default "settings" object when the user's file doesn't define one, so
+    saving that back would copy all default settings to the user's file.
     """
+    user_settings_path = Path(sublime.packages_path(), "User", SETTINGS_FILENAME)
+    try:
+        user_settings = sublime.decode_value(user_settings_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    server_settings = user_settings.get("settings") if isinstance(user_settings, dict) else None
+    return server_settings if isinstance(server_settings, dict) else {}
+
+
+def code_action_insert_settings(server_setting_key: str, value: dict[str, list[str]]) -> None:
+    """
+    Adds entries from the ltex-ls-plus quick fixes ("Add to dictionary", "Disable rule", "Hide false positive") to the
+    user's settings, merging them with entries already set there.
+
+    :param      server_setting_key:    The key of the server setting (in the "settings" object)
+    :param      value:                 A dict of "language": [entries] pairs
+    """
+    server_settings = read_user_server_settings()
+    entries: dict[str, list[str]] = server_settings.get(server_setting_key) or {}
+    for language, new_entries in value.items():
+        # Remove duplicates while preserving order.
+        entries[language] = list(dict.fromkeys(entries.get(language, []) + new_entries))
+    server_settings[server_setting_key] = entries
     settings = sublime.load_settings(SETTINGS_FILENAME)
-    server_settings: Any = settings.get("settings")
-    exception_dict = server_settings.get(server_setting_key, {})
-
-    for k, val in value.items():
-        language_setting = exception_dict.get(k, [])
-        # Remove duplicates
-        new_language_setting = list(set(language_setting + val))
-        exception_dict[k] = new_language_setting
-
-    server_settings[server_setting_key] = exception_dict
     settings.set("settings", server_settings)
     sublime.save_settings(SETTINGS_FILENAME)
 
