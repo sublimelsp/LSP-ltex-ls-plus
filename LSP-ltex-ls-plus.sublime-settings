@@ -78,7 +78,7 @@
         "ltex.diagnosticSeverity": "information",
 
         // Controls when documents should be checked.
-        // One of "edit", "save", and "manual" (vscode-only).
+        // One of "edit" or "save".
         "ltex.checkFrequency": "edit",
         // If set to true, diagnostics of a file are cleared when the file is closed
         "ltex.clearDiagnosticsWhenClosingFile": true,

@@ -203,13 +203,11 @@
                       "default": "edit",
                       "enum": [
                         "edit",
-                        "save",
-                        "manual"
+                        "save"
                       ],
                       "markdownEnumDescriptions": [
                         "Documents are checked when they are opened or edited (on every keystroke), or when the settings change.",
-                        "Documents are checked when they are opened or saved, or when the settings change.",
-                        "Documents are not checked automatically, except when the settings change. Use commands such as [LTeX: Check Current Document`](https://ltex-plus.github.io/ltex-plus/vscode-ltex-plus/commands.html#ltex-check-current-document) to manually trigger checks."
+                        "Documents are checked when they are opened or saved, or when the settings change."
                       ],
                       "markdownDescription": "Controls when documents should be checked. [More info...](https://ltex-plus.github.io/ltex-plus/settings.html#ltexcheckfrequency)"
                     },
